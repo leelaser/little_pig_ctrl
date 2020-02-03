@@ -1,21 +1,21 @@
 left_front_wheel:
-  steering_link_name: left_front_link
+  steering_link_name: left_steering_link
   steering_controller_name: left_steering_ctrlr
   axle_controller_name: left_front_axle_ctrlr
-  diameter: 0.14605
+  diameter: 0.605
 
 right_front_wheel:
-  steering_link_name: right_front_link
+  steering_link_name: right_steering_link
   steering_controller_name: right_steering_ctrlr
   axle_controller_name: right_front_axle_ctrlr
-  diameter: 0.14605
+  diameter: 0.605
 
 left_rear_wheel:
   link_name: left_rear_wheel
   axle_controller_name: left_rear_axle_ctrlr
-  diameter: 0.14605
+  diameter: 0.635
 
 right_rear_wheel:
   link_name: right_rear_wheel
   axle_controller_name: right_rear_axle_ctrlr
-  diameter: 0.14605
+  diameter: 0.635
