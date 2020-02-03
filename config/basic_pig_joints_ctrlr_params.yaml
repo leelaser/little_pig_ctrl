@@ -39,28 +39,28 @@ right_steering_postion_ctrl:
 
 # Front left wheel
 front_left_wheel_velocity_ctrl:
-  type: velocity_controllers/JointVelocityController
+  type: effort_controllers/JointPositionController
   joint: left_ackerman_link_front_left_wheel
   # These PIDs might need to be adjusted
   pid: { p: 10000.0, i: 0.01, d: 10.0 }
 
 # Front right wheel
 front_right_wheel_velocity_ctrl:
-  type: velocity_controllers/JointVelocityController
+  type: effort_controllers/JointPositionController
   joint: right_ackerman_link_front_right_wheel
   # These PIDs might need to be adjusted
   pid: { p: 10000.0, i: 0.01, d: 10.0 }
 
 # Rear left wheel
 rear_left_wheel_velocity_ctrl:
-  type: velocity_controllers/JointVelocityController
+  type: effort_controllers/JointPositionController
   joint: base_link_rear_left_wheel
   # These PIDs might need to be adjusted
   pid: { p: 10000.0, i: 0.01, d: 10.0 }
 
 # Rear right wheel
 rear_right_wheel_velocity_ctrl:
-  type: velocity_controllers/JointVelocityController
+  type: effort_controllers/JointPositionController
   joint: base_link_rear_right_wheel
   # These PIDs might need to be adjusted
   pid: { p: 10000.0, i: 0.01, d: 10.0 }
