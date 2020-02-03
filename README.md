@@ -18,9 +18,9 @@ Heres a simple guide to get you started with Little Pig Control. Before continui
 
 Your resulting directory should have this layout:
 
-- catkin_ws
-  - scr
-    - little_pig_ctrl
-    - little_pig_description
-    - little_pig_gazebo
-    - little_pig_rviz
+- catkin_ws/
+  - src/
+    - little_pig_ctrl/
+    - little_pig_description/
+    - little_pig_gazebo/
+    - little_pig_rviz/
