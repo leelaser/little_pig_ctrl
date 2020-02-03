@@ -15,3 +15,12 @@ Heres a simple guide to get you started with Little Pig Control. Before continui
     - ```git clone https://github.com/22arw/little_pig_rviz.git```
     - ```git clone https://github.com/22arw/little_pig_description.git```
     - ```git clone https://github.com/22arw/little_pig_gazebo.git```
+
+Your resulting directory should have this layout:
+
+- catkin_ws
+  - scr
+    - little_pig_ctrl
+    - little_pig_description
+    - little_pig_gazebo
+    - little_pig_rviz
