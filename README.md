@@ -24,3 +24,12 @@ Your resulting directory should have this layout:
     - little_pig_description/
     - little_pig_gazebo/
     - little_pig_rviz/
+
+### Usage Instructions
+
+Once you have this repo downloaded, run the following commands in the terminal:
+
+- ```cd ..```
+- ```catkin_make```
+
+This should completed without failing. If it does fail, call Coach.
