@@ -25,19 +25,19 @@ class _AckermannCtrlr(object):
         # Wheels
         (left_steer_link_name, left_steer_ctrlr_name,
          left_front_axle_ctrlr_name, self._left_front_inv_circ) = \
-                self._get_front_wheel_params("left")
+            self._get_front_wheel_params("left")
 
         (right_steer_link_name, right_steer_ctrlr_name,
          right_front_axle_ctrlr_name, self._right_front_inv_circ) = \
-                self._get_front_wheel_params("right")
+            self._get_front_wheel_params("right")
 
         (left_rear_link_name, left_rear_axle_ctrlr_name,
          self._left_rear_inv_circ) = \
-                self._get_rear_wheel_params("left")
+            self._get_rear_wheel_params("left")
 
         (self._right_rear_link_name, right_rear_axle_ctrlr_name,
          self._right_rear_inv_circ) = \
-                self._get_rear_wheel_params("right")
+            self._get_rear_wheel_params("right")
 
         list_ctrlrs = rospy.ServiceProxy("controller_manager/list_controllers",
                                          ListControllers)
@@ -71,14 +71,14 @@ class _AckermannCtrlr(object):
         # _ackermann_cmd_lock is used to control access to _steer_ang,
         # _steer_ang_vel, _speed, and _accel.
         self._ackermann_cmd_lock = threading.Lock()
-        self._steer_ang = 0.0      # Steering angle
+        self._steer_ang = 0.0  # Steering angle
         self._steer_ang_vel = 0.0  # Steering angle velocity
         self._speed = 0.0
-        self._accel = 0.0          # Acceleration
+        self._accel = 0.0  # Acceleration
 
         self._last_steer_ang = 0.0  # Last steering angle
-        self._theta_left = 0.0      # Left steering joint angle
-        self._theta_right = 0.0     # Right steering joint angle
+        self._theta_left = 0.0  # Left steering joint angle
+        self._theta_right = 0.0  # Right steering joint angle
 
         self._last_speed = 0.0
         self._last_accel_limit = 0.0  # Last acceleration limit
@@ -96,8 +96,8 @@ class _AckermannCtrlr(object):
         self._joint_dist_div_2 = numpy.linalg.norm(ls_pos - rs_pos) / 2
         lrw_pos = self._get_link_pos(tfl, left_rear_link_name)
         rrw_pos = numpy.array([0.0] * 3)
-        front_cent_pos = (ls_pos + rs_pos) / 2     # Front center position
-        rear_cent_pos = (lrw_pos + rrw_pos) / 2    # Rear center position
+        front_cent_pos = (ls_pos + rs_pos) / 2  # Front center position
+        rear_cent_pos = (lrw_pos + rrw_pos) / 2  # Rear center position
         self._wheelbase = numpy.linalg.norm(front_cent_pos - rear_cent_pos)
         self._inv_wheelbase = 1 / self._wheelbase  # Inverse of _wheelbase
         self._wheelbase_sqr = self._wheelbase ** 2
@@ -131,8 +131,7 @@ class _AckermannCtrlr(object):
             delta_t = t - last_time
             last_time = t
 
-            if (self._cmd_timeout > 0.0 and
-                t - self._last_cmd_time > self._cmd_timeout):
+            if 0.0 < self._cmd_timeout < t - self._last_cmd_time:
                 # Too much time has elapsed since the last command. Stop the
                 # vehicle.
                 steer_ang_changed, center_y = \
@@ -155,7 +154,7 @@ class _AckermannCtrlr(object):
             if self._left_front_axle_cmd_pub:
                 self._left_front_axle_cmd_pub.publish(self._left_front_ang_vel)
             if self._right_front_axle_cmd_pub:
-                self._right_front_axle_cmd_pub.\
+                self._right_front_axle_cmd_pub. \
                     publish(self._right_front_ang_vel)
             if self._left_rear_axle_cmd_pub:
                 self._left_rear_axle_cmd_pub.publish(self._left_rear_ang_vel)
@@ -223,7 +222,7 @@ class _AckermannCtrlr(object):
         if steer_ang_vel_limit > 0.0:
             ang_vel = (steer_ang - self._last_steer_ang) / delta_t
             ang_vel = max(-steer_ang_vel_limit,
-                           min(ang_vel, steer_ang_vel_limit))
+                          min(ang_vel, steer_ang_vel_limit))
             theta = self._last_steer_ang + ang_vel * delta_t
         else:
             theta = steer_ang
@@ -241,8 +240,7 @@ class _AckermannCtrlr(object):
 
         return steer_ang_changed, center_y
 
-    def _ctrl_axles(self, speed, accel_limit, delta_t, steer_ang_changed,
-                    center_y):
+    def _ctrl_axles(self, speed, accel_limit, delta_t, steer_ang_changed, center_y):
 
         if accel_limit > 0.0:
             self._last_accel_limit = accel_limit
@@ -269,15 +267,16 @@ class _AckermannCtrlr(object):
             self._right_rear_ang_vel = \
                 gain * right_dist * self._right_rear_inv_circ
 
-    _DEF_WHEEL_DIA = 1.0    # Default wheel diameter. Unit: meter.
-    _DEF_EQ_POS = 0.0       # Default equilibrium position. Unit: meter.
+    _DEF_WHEEL_DIA = 1.0  # Default wheel diameter. Unit: meter.
+    _DEF_EQ_POS = 0.0  # Default equilibrium position. Unit: meter.
     _DEF_CMD_TIMEOUT = 0.5  # Default command timeout. Unit: second.
-    _DEF_PUB_FREQ = 30.0    # Default publishing frequency. Unit: hertz.
+    _DEF_PUB_FREQ = 30.0  # Default publishing frequency. Unit: hertz.
+
+
 # end _AckermannCtrlr
 
 
 def _wait_for_ctrlr(list_ctrlrs, ctrlr_name):
-
     while True:
         response = list_ctrlrs()
         for ctrlr in response.controller:
