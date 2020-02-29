@@ -18,7 +18,7 @@ class _AckermannMove(object):
 
         self.ackermann_msg = AckermannDrive()
         self.twist_sub = rospy.Subscriber('/cmd_vel', Twist, self.ackermann_cb, queue_size=1)
-        self.ackermann_pub = rospy.Publisher('/basic_pig/ackermann_cmd', AckermannDrive, queue_size=1)
+        self.ackermann_pub = rospy.Publisher('/basic_laser_pig/ackermann_cmd', AckermannDrive, queue_size=1)
 
     def ackermann_cb(self, data):
         cmd_data = data
