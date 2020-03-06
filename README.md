@@ -35,10 +35,10 @@ Once you have this repo downloaded, run the following commands in the terminal:
 This should completed without failing. If it does fail, call Coach.
 
 ### Using Teleop to drive Little Pig
-
+#With the latest update, teleop should automatically be executed from the launch file.
 First, make sure you have teleop-twist-keybard installed using ```sudo apt-get install ros-melodic-teleop-twist-keyboard```. 
 
-After running Gazebo, navigate to the little_pig_ctrl directory and run the teleop_test.py file using ```rosrun little_pig_ctrl teleop_test.py```
+~~After running Gazebo, navigate to the little_pig_ctrl directory and run the teleop_laser_pig.py file using ```rosrun little_pig_ctrl teleop_laser_pig.py```~~
 In a separate terminal, run ```rosrun rqt_gui rqt_gui``` and enable robot steering. This will allow you to navigate in Gazebo using W A S D keys.
 
 **IMPORTANT NOTE***
