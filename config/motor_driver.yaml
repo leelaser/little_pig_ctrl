@@ -1,0 +1,66 @@
+sync:
+  interval_ms: 250
+  overflow: 10
+heartbeat:
+  rate: 1
+  msg: "77f#05"
+
+#defaults:
+  #dcf_overlay: these can be manually set
+    #"6083": "1000000" # profile acceleration
+    #"6084": "1000000" # profile deceleration
+    #"60C5": "1000000" # maximum acceleration
+    #"60C6": "1000000" # maximum deceleration
+    #"6099sub1": "100000" # find switch (coarse)
+    #"6099sub2": "10000" # find home (fine)
+    #"1016sub1" : "0x7F0064" # heartbeat timeout of 100 ms for master at 127
+  #eff_from_device: "obj6078/1000.0*9.76" #CL[1]=9.76
+
+#drive_wheel: &drive_wheel
+  #dcf_overlay: # "ObjectID" : "ParameterValue" (both as strings)
+  #  "6098": "35" # homing method
+  #vel_from_device: #"p1 != p1 || obj2041 == t1 ? 0 : deg2rad(1000*norm(obj6064-p1,-36000000,36000000)/norm(obj2041-t1,0,2^32)), p1=p0, p0 = obj6064, t1 = t0, t0 = obj2041"
+  #eff_from_device: #"obj6078/1000.0*14.14" #CL[1]=14.14
+
+nodes:
+
+  right_steering_joint:
+    joint: right_steering_joint
+    eds_pkg: little_pig_ctrl
+    eds_file: "/config/HBL2360A.eds"
+    id: 8
+
+    motor_allocator: canopen::Motor402_2::Allocator
+    #vel_to_device: "vel * 60 / (24 * pi * 0.0254) / 4.2" #This is not used in the COB4 package
+    #vel_from_device: "obj686C"
+    motor_layer:
+      switching_state: 5 #operation enable
+
+  ##Wheel 1
+  #right_front_axle:
+    joint_2: right_front_axle
+    #eds_pkg: little_pig_ctrl
+    #eds_file: "/config/HBL2360A.eds"
+    #id: 8
+    #publish:
+      #- "0x210Dsub2!" #	Battery Volts
+      #- "0x210Fsub2!" #	Temp 1
+      #- "0x210Fsub3!" #	Temp 2
+        #- "0x6041!" #		Status Word 1
+        #- "0x6841!" #		Status Word 2
+      #- "0x210Asub1!" #	Motor 1 Speed
+      #- "0x2122sub1!" #	Motor 1 Status Flag
+      #- "0x2100sub1!" #	Motor 1 Amps
+      #- "0x2104sub2!" #	Motor 2 Encoder Count
+      #- "0x2122sub2!" #	Motor 2 Status Flag
+      #- "0x2100sub2!" #	Motor 2 Amps
+      #- "0x2112!" #		Fault Flag
+
+    motor_allocator_2: canopen::Motor402_1::Allocator
+    ##vel_to_device: "vel * 60 / (24 * pi * 0.0254) / 4.2" #This is not used in the COB4 package
+    ##vel_from_device: "obj606C"
+    motor_layer_2:
+      switching_state: 5 #operation enable
+
+
+
