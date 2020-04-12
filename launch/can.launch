@@ -1,5 +1,0 @@
-<launch>
-  <node name="canopen" pkg="canopen_chain_node" type="canopen_chain_node" output="screen" clear_params="true" >
-    <rosparam command="load" file="$(find little_pig_ctrl)/config/dump.yaml" />
-  </node>
-</launch>
