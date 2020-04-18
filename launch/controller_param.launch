@@ -1,0 +1,4 @@
+<launch> 
+	<include file="$(find little_pig_ctrl)/launch/includes/teleoplaunch.xml" />
+	<include file="$(find little_pig_ctrl)/launch/includes/controllerparamlaunch.xml" />
+</launch>
