@@ -12,7 +12,7 @@
 
 	<include file="$(find mavros)/launch/node.launch">
 		<arg name="pluginlists_yaml" value="$(find mavros)/launch/apm_pluginlists.yaml" />
-		<arg name="config_yaml" value="$(find little_pig_ctrl)/config/apm_config.yaml" />
+		<arg name="config_yaml" value="$(find little_pig_ctrl)/config/mavros_config.yaml" />
 
 		<arg name="fcu_url" value="$(arg fcu_url)" />
 		<arg name="gcs_url" value="$(arg gcs_url)" />
