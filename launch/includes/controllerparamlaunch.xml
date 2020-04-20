@@ -1,3 +1,0 @@
-<launch>
-	<node name="controller" pkg="little_pig_ctrl" type="controller_param" />
-</launch>

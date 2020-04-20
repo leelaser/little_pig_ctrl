@@ -1,3 +1,0 @@
-<launch> 
-	<include file="$(find little_pig_ctrl)/launch/includes/joystick_remapper.xml" />
-</launch>
