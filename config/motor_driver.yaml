@@ -24,7 +24,7 @@ heartbeat:
 
 nodes:
 
-  right_steering_joint:
+  RoboTeq_HBL2360A:
     joint: right_steering_joint
     eds_pkg: little_pig_ctrl
     eds_file: "/config/HBL2360A.eds"
