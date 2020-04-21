@@ -9,7 +9,6 @@
 	<group ns="$(arg component_name)">
 		<rosparam command="load" file="$(arg pkg_hardware_config)/config/motor_controller.yaml"/> <!-- this is the controller params -->
 		<!--rosparam command="load" file="$(arg pkg_hardware_config)/robots/$(arg robot)/config/$(arg component_name)_joint_limits.yaml"/-->
-		<node pkg="controller_manager" type="controller_manager" name="controller_spawner" args="spawn joint_state_controller steering_controler propulsion_controller" respawn="false" output="screen"/>
 	</group>
 
 </launch>
