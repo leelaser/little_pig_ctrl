@@ -8,6 +8,6 @@ catkin_package()
 
 include_directories(${catkin_INCLUDE_DIRS})
 
-catkin_install_python(PROGRAMS src/ackermann_controller DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+#catkin_install_python(PROGRAMS src/ackermann_controller DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 install(DIRECTORY config src DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
