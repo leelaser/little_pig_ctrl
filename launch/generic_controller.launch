@@ -8,7 +8,6 @@
 
 	<group ns="$(arg component_name)">
 		<rosparam command="load" file="$(arg pkg_hardware_config)/config/motor_controller.yaml"/> <!-- this is the controller params -->
-		<!--rosparam command="load" file="$(arg pkg_hardware_config)/robots/$(arg robot)/config/$(arg component_name)_joint_limits.yaml"/-->
 	</group>
 
 </launch>
