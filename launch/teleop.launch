@@ -6,7 +6,7 @@
 	<remap from="/basic_pig/cmd_vel" to="/basic_pig/ackermann_controller/cmd_vel"/>
 
 	<node pkg="teleop_twist_joy" type="teleop_node" name="joystick_to_twist">
-		<param name="scale_angular" value=".85" />
-		<param name="scale_linear" value="1" />
+		<param name="scale_angular" value="0.3" />	<!-- These really are the limits in urdf -->
+		<param name="scale_linear" value="4.785" />
 	</node>
 </launch>

@@ -1,6 +1,3 @@
-## joint_names
-#joint_names: [right_front_axle]
-
 ## control_mode_adapter
 # max_command_silence: 0.5
 
@@ -17,6 +14,7 @@ steering_controller:
 
 propulsion_controller:
   joint: right_front_axle
-  required_drive_mode: 3 #profile velocity
+  #required_drive_mode: -4 #Velocity Position
+  required_drive_mode: 2 #Velocity
   type: velocity_controllers/JointVelocityController
   #pid: {p: 0.0, i: 0.0, d: 0.0}
