@@ -6,15 +6,56 @@ joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
 
-steering_controller:
-  joint: right_steering_joint
-  required_drive_mode: 1 #profile position
-  type: position_controllers/JointPositionController
-  #pid: {p: 0.0, i: 0.0, d: 0.0}
+ackermann_controller:
+  type: ackermann_controller/AckermannController
+  spinning_joints:
+    - "right_front_axle"
+  steering_joints:
+    - "right_steering_joint"
+  odometry_joints:
+    - "right_front_axle"
 
-propulsion_controller:
-  joint: right_front_axle
-  #required_drive_mode: -4 #Velocity Position
-  required_drive_mode: 2 #Velocity
-  type: velocity_controllers/JointVelocityController
-  #pid: {p: 0.0, i: 0.0, d: 0.0}
+  required_drive_modes:
+    right_front_axle: 2
+    right_steering_joint: 1
+
+  pose_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]
+  twist_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]
+
+  has_velocity_limits: true
+  has_acceleration_limits: true
+  has_deceleration_limits: true
+  has_jerk_limits: false
+  max_velocity: 4.5
+  #min_velocity: 0.0
+  max_acceleration: 2.0
+  #min_acceleration: 0.0
+  max_deceleration: 2.0
+  #min_deceleration: 0.0
+
+  enable_odom_tf: false
+
+  #wheelbase is technically 1.71 but trimming to get repeatability
+  wheelbase: 1.63
+  #wheelbase: 1.63
+
+  steering_angle_instead_of_angular_speed: true
+
+  cmd_vel_timeout: 0.5
+
+  base_model_link: "base_link"
+
+  odom_frame_id: "odom"
+
+  base_frame_id: "base_link"
+
+# steering_controller:
+#   joint: right_steering_joint
+#   required_drive_mode: 1 #profile position
+#   type: position_controllers/JointPositionController
+
+# propulsion_controller:
+#   joint: right_front_axle
+#   #required_drive_mode: -4 #Velocity Position
+#   required_drive_mode: 2 #Velocity
+#   type: velocity_controllers/JointVelocityController
