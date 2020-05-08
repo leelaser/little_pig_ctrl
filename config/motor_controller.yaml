@@ -33,7 +33,7 @@ ackermann_controller:
   max_deceleration: 2.0
   #min_deceleration: 0.0
 
-  enable_odom_tf: true
+  enable_odom_tf: false
 
   #wheelbase is technically 1.71 but trimming to get repeatability
   wheelbase: 1.206
