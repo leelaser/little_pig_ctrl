@@ -35,7 +35,7 @@ nodes:
     motor_layer_2:
       switching_state: 5 #operation enable
     
-    publish:
+    #publish:
       #- "0x6064!" #	Battery Volts
       #- "0x210Fsub2!" #	Temp 1
       #- "0x210Fsub3!" #	Temp 2
