@@ -5,7 +5,7 @@
 
     <!-- Generic parameters -->
 	<arg name="robot" value="basic_laser_pig"/>     <!-- This needs to take a better name -->
-	<arg name="sim" value="false"/>                  <!-- true will run simulation components -->
+	<arg name="sim" value="true"/>                  <!-- true will run simulation components -->
     
     <!-- Gazebo parameters -->
     <arg name="world_name" value="gas_station"/>    <!-- This is the world gazebo will launch -->
@@ -35,6 +35,13 @@
 
         <group if="$(arg sim)" ns="$(arg sim_ns)">
 
+    
+            <include file="$(find little_pig_description)/launch/upload_robot.launch">
+                <arg name="robot" value="$(arg robot)"/>
+                <arg name="pkg_hardware_config" value="$(arg path2urdf)"/>
+            </include>
+
+
             <!-- Start Gazebo world with given name -->
             <include file="$(find gazebo_ros)/launch/empty_world.launch">
                 <!-- <arg name="world_name" value="$(find little_pig_gazebo)/worlds/$(arg world_name).world"/> -->
@@ -47,16 +54,16 @@
             </include>
 
             <!-- This remap needs overriden if teb is to be used -->
-            <remap from="cmd_vel" to="ackermann_controller/cmd_vel" />
+            <remap from="cmd_vel" to="ackermann_controller/cmd_vel" /> 
             <include file="$(find little_pig_ctrl)/launch/teleop.launch" /> <!-- TELEOP -->
 
             <!-- Static transform to fix issues with naming convention in rviz -->
             <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf" args="0 0 0 0 0 0 laser_link front_laser/laser_link" />
 
             <!-- Spawns rviz with preset configuration -->
-            <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/full_sim.rviz" required="true"/>
+            <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/laser_pig_sim.rviz" required="true"/>
 
-            <!-- Launch gmapping instance, only necessary in learning -->
+            <!-- Launch gmapping instance, only necessary in learning --> 
             <include file="$(find little_pig_navigation)/launch/gmapping_sim.launch" />
 
             <!-- Launches robot localization instance 1 -->
@@ -69,6 +76,11 @@
 
             <!-- Launches navsat Transform instance -->
             <include file="$(find little_pig_navigation)/launch/navsat_sim.launch" />
+
+            <include file="$(find little_pig_navigation)/launch/move_base_nav.launch" />
+
+            <include file="$(find little_pig_navigation)/launch/include/safety_node.launch" />
+
 
         </group>
 
