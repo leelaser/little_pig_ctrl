@@ -28,8 +28,8 @@ nodes:
     motor_allocator_2: canopen::Motor402_2::Allocator
     #pos_to_device_2: "5000 * pos / (2 * pi)"
     pos_to_device_2: "(pos * 8196) / (2 * pi) * 47"
-    #pos_from_device_2:  "(obj2106sub2 - 2625) * (2 * pi) / 5000"
-    pos_from_device_2:  "((obj2106sub2 > 2675) ? ((obj2106sub2 - 2675) * (2 * pi) / 9200) : ((obj2106sub2 - 2675) * (2 * pi) / 8200))"
+    #pos_from_device_2:  "(obj2106sub2 - 2635) * (2 * pi) / 5000"
+    pos_from_device_2:  "((obj2106sub2 > 2770) ? ((obj2106sub2 - 2770) * (2 * pi) / 8950) : ((obj2106sub2 - 2770) * (2 * pi) / 8710))"
     #pos_from_device_2:  "((obj6864  > 15000) ? ((obj6084 - 15000) * 2 * pi) / (8196 * 47) : ((obj6864  < -15000) ? ((obj6084 + 15000) * 2 * pi) / (8196 * 47) : 0))"
     #position is rad * 1/(2*pi) rev/rad * 8196 p/mrev * 47 srev/mrev  #this goes radians -> pulses, NOTE: gearbox reduces by 47
     motor_layer_2:
