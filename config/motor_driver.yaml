@@ -14,28 +14,32 @@ nodes:
 
     joint: ackermann_rear_axle
     motor_allocator: canopen::Motor402_1::Allocator
-    #vel_to_device: "(vel * 60) / (12 * (2 * pi) * 0.0254) * 20"
     vel_to_device: "(vel * 22  * 60 / (2 * pi))"
-    #vel_from_device: "(obj2106sub1 * (12 * 2 * pi) * 0.0254) / (60 * 20)"
     vel_from_device: "(obj2106sub1 * 2 * pi / (60 * 22))"
     pos_from_device:  "(obj6044 * 2 * pi) / (24 * 22)"
 
-    #velocity is m/s * 60 s/min * 1/0.0254 in/m * 1 / (2*pi*12) rev/in  #this goes m/s -> rev/min, NOTE: net gearbox reduces by 20
+    #velocity is m/s * 60 s/min * 1/0.0254 in/m * 1 / (2*pi*12) rev/in  #this goes m/s -> rev/min, 
+    #NOTE: net gearbox reduces by 20
     motor_layer:
       switching_state: 5 #operation enable
 
+#This is for Position Relative Feedback, This is ideal however the motor would not start correctly from CAN
+    # joint_2: ackermann_steering_joint
+    # motor_allocator_2: canopen::Motor402_2::Allocator
+    # pos_to_device_2: "pos / (2 * pi / 12) * 1000"
+    # pos_from_device_2:  "obj6064 * (2 * pi / 12) / 1000"
+    # motor_layer_2:
+    #   switching_state: 5 #operation enable
+
+#This is for Count Position Fedback
     joint_2: ackermann_steering_joint
     motor_allocator_2: canopen::Motor402_2::Allocator
-    #pos_to_device_2: "5000 * pos / (2 * pi)"
     pos_to_device_2: "(pos * 8196) / (2 * pi) * 47"
-    #pos_from_device_2:  "(obj2106sub2 - 2635) * (2 * pi) / 5000"
     pos_from_device_2:  "((obj2106sub2 > 2770) ? ((obj2106sub2 - 2770) * (2 * pi) / 8950) : ((obj2106sub2 - 2770) * (2 * pi) / 8710))"
-    #pos_from_device_2:  "((obj6864  > 15000) ? ((obj6084 - 15000) * 2 * pi) / (8196 * 47) : ((obj6864  < -15000) ? ((obj6084 + 15000) * 2 * pi) / (8196 * 47) : 0))"
-    #position is rad * 1/(2*pi) rev/rad * 8196 p/mrev * 47 srev/mrev  #this goes radians -> pulses, NOTE: gearbox reduces by 47
     motor_layer_2:
       switching_state: 5 #operation enable
     
-    #publish:
+    #publish: #Uncomment this section to publish this data to ros topics
       #- "0x6064!" #	Battery Volts
       #- "0x210Fsub2!" #	Temp 1
       #- "0x210Fsub3!" #	Temp 2
@@ -48,4 +52,3 @@ nodes:
       #- "0x2122sub2!" #	Motor 2 Status Flag
       #- "0x2100sub2!" #	Motor 2 Amps
       #- "0x2112!" #		Fault Flag
-      #- "0x6864"

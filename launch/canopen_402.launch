@@ -1,17 +1,12 @@
 <?xml version="1.0"?> <!-- This is a generic launching file that must be passed parameters -->
 <launch>
 
-	<arg name="robot" default="$(optenv ROBOT !!NO_ROBOT_SET!!)"/>
-	<arg name="pkg_hardware_config" default="$(find little_pig_ctrl)"/>
-	<arg name="component_name"/>
 	<arg name="can_device"/>
-	<arg name="interval_ms"/>
-	<arg name="overflow" default="0"/>
-	<arg name="reset_errors_before_recover" default="false"/>
+	<arg name="reset_errors_before_recover" default="true"/>
+	<arg name="name" default="CANopen"/>
 	
 	<!-- start canopen node -->
-	<node ns="$(arg component_name)" pkg="canopen_motor_node" type="canopen_motor_node" name="driver" output="screen">
-		<rosparam command="load" file="$(arg pkg_hardware_config)/config/motor_driver.yaml"/>
+	<node pkg="canopen_motor_node" type="canopen_motor_node" name="$(arg name)" output="screen">
 		<rosparam subst_value="True">{bus: { device: $(arg can_device) } }</rosparam>
 		<param name="bus/master_allocator" value="canopen::SimpleMaster::Allocator"/> <!-- this is not used in COB4 -->
 		<param name="reset_errors_before_recover" value="$(arg reset_errors_before_recover)"/>

@@ -1,0 +1,8 @@
+topics:
+-
+  name    : joystick
+  topic   : Twist/teleop_joy_cmd_vel
+  timeout : 0.25
+  priority: 10
+
+#locks: should this be necessary

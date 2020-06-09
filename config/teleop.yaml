@@ -1,0 +1,11 @@
+Joy:
+  autorepeat_rate: 10.0
+
+Teleop_Joy:
+  scale_angular: 0.5 #These need to be less than urdf limits 1.55 on real thing, 0.523
+  scale_linear: 0.5
+  scale_linear_turbo: 1.0
+  enable_button: 7 #7 if xbox one via bluetooth, 5 if wired
+  enable_turbo_button: 6 #6 if xbox one via bluetooth, 6 if wired
+  axis_angular: 2 #2 if xbox one via bluetooth, 3 if wired
+  publish_frequency: 10
