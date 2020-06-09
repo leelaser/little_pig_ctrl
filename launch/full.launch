@@ -55,7 +55,6 @@
     <!-- Publishes static transforms for fixed joints -->
     <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
-    <!-- <group if="$(arg sim)" ns="$(arg sim_ns)"> -->
     <group if="$(arg sim)">
 
         <!-- Start Gazebo world with given name if desired -->
@@ -96,35 +95,14 @@
         <remap from="CANopen/ackermann_controller/cmd_vel" to="ackermann_controller/cmd_vel"/>
         <remap from="CANopen/ackermann_controller/odom" to="ackermann_controller/odom"/>
 
-        <!-- This is only a temporary solution to namespace problems
-        <group ns="CANopen">
-            <include file="$(find little_pig_description)/launch/upload_robot.launch">
-                <arg name="robot" value="$(arg robot)"/>
-            </include>
-        </group> -->
-
         <include file="$(find little_pig_ctrl)/launch/canopen_402.launch">
             <arg name="name" default="$(arg CANBUS)"/>
             <arg name="can_device" value="$(arg can_device)"/>
             <!-- <arg name="reset_errors_before_recover" value="$(arg reset_errors_before_recover)"/ Deemed Unnecessary -->
         </include>
 
-        <!-- <include file="$(find little_pig_ctrl)/launch/generic_controller.launch">
-            <arg name="robot" value="$(arg robot)"/>
-            <arg name="component_name" value="CANopen"/>
-        </include> -->
-
         <!-- Launches mavros instance -->
         <include file="$(find little_pig_navigation)/launch/mavros.launch" />
-
-        <!-- Launches robot localization instance 1 -->
-        <!-- <include file="$(find little_pig_navigation)/launch/ekf_1.launch" /> -->
-
-        <!-- Launches robot localization instance 2 including navsat corrections -->
-        <!-- <include file="$(find little_pig_navigation)/launch/ekf_2.launch" /> -->
-
-        <!-- Launches navsat Transform instance -->
-        <!-- <include file="$(find little_pig_navigation)/launch/navsat.launch" /> -->
 
         <!-- Launches rpLidar instance -->
         <include file="$(find little_pig_navigation)/launch/lidar.launch" />
