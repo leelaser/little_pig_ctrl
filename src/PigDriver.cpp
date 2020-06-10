@@ -42,24 +42,6 @@ PigDriver::PigDriver(const ros::NodeHandle &nh)
 
     unloadService.request.name = "ackermann_controller";
 
-    // startService.request = {
-    //     .start_controllers = {"ackermann_controller"},
-    //     .stop_controllers = {},
-    //     .strictness = 2,
-    //     .start_asap = false,
-    //     .timeout = 0.0};
-
-    // stopService.request = {
-    //     .start_controllers = {},
-    //     .stop_controllers = {"ackermann_controller"},
-    //     .strictness = 2,
-    //     .start_asap = false,
-    //     .timeout = 0.0};
-    
-    // loadService = {
-
-    // }
-
     bus_init_.waitForExistence();
     std_srvs::Trigger srv;
     bus_init_.call(srv);
@@ -81,11 +63,7 @@ PigDriver::PigDriver(const ros::NodeHandle &nh)
 }
 
 PigDriver::~PigDriver()
-{
-    // std_srvs::Trigger srv;
-    // srv.
-    // init_.
-}
+{}
 
 bool PigDriver::init(std_srvs::Trigger::Request  &req, std_srvs::Trigger::Response &res)
 {
@@ -120,7 +98,6 @@ bool PigDriver::motor_start(std_srvs::Trigger::Request  &req, std_srvs::Trigger:
     bus_switch_.call(stopService);
     bus_switch_.call(startService);
     res.success = startService.response.ok;
-    //res.message = startService.response.message;
     return true;
 }
 
@@ -128,7 +105,6 @@ bool PigDriver::motor_stop(std_srvs::Trigger::Request  &req, std_srvs::Trigger::
 {
     bus_switch_.call(stopService);
     res.success = stopService.response.ok;
-    //res.message = stopService.response.message;
     return true;
 }
 

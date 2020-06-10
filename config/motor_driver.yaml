@@ -16,7 +16,7 @@ nodes:
     motor_allocator: canopen::Motor402_1::Allocator
     vel_to_device: "(vel * 22  * 60 / (2 * pi))"
     vel_from_device: "(obj2106sub1 * 2 * pi / (60 * 22))"
-    pos_from_device:  "(obj6044 * 2 * pi) / (24 * 22)"
+    #pos_from_device:  "(obj6044 * 2 * pi) / (24 * 22)"
 
     #velocity is m/s * 60 s/min * 1/0.0254 in/m * 1 / (2*pi*12) rev/in  #this goes m/s -> rev/min, 
     #NOTE: net gearbox reduces by 20

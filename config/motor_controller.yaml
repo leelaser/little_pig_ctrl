@@ -12,8 +12,10 @@ ackermann_controller:
     - "ackermann_rear_axle"
 
   required_drive_modes:
-    ackermann_rear_axle: 2 #going to -4 or 65536 or 253
-    ackermann_steering_joint: 1
+    ackermann_rear_axle: 2 #Rear axle will be in velocity mode according to CANopen standard
+    ackermann_steering_joint: 1 #Steering axle will be in position mode according to CANopen standard
+    #Roboteq is scripted to change the rear axle to mode -3 which is velocity position control
+    #Future: Roboteq is scripted to change the steering axle to mode -1 which is velocity position control
 
   pose_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]
   twist_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]

@@ -1,11 +1,12 @@
 Joy:
-  autorepeat_rate: 10.0
+  autorepeat_rate: 10.0 #This might not be safe or might cause a problem if we lose bluetooth connectivity
 
 Teleop_Joy:
-  scale_angular: 0.5 #These need to be less than urdf limits 1.55 on real thing, 0.523
-  scale_linear: 0.5
-  scale_linear_turbo: 1.0
+  #This is a problem because of backlash
+  scale_angular: 1.55 #These need to be less than urdf limits 1.55 on real thing, 0.523
+  scale_linear: 0.5 #m/s
+  scale_linear_turbo: 1.0 #m/s
   enable_button: 7 #7 if xbox one via bluetooth, 5 if wired
-  enable_turbo_button: 6 #6 if xbox one via bluetooth, 6 if wired
+  enable_turbo_button: 6 #6 if xbox one via bluetooth, 4 if wired
   axis_angular: 2 #2 if xbox one via bluetooth, 3 if wired
   publish_frequency: 10
