@@ -3,6 +3,8 @@
 This repository is meant for all the control based code **only**. Example's of such:
 - Mapping a game controller to the controls of the simulated/real little pig.
 
+This works with standard xbox one controllers.  Some generic controllers seem to work correctly most of the time but have shown notable differences between systems.  The mapping shown below is for standard xbox controllers but mapping generic controllers can be done using jstest-gtk to determine button layout.
+
 ### Using Teleop to drive Little Pig
 
 #### In order to drive the vehicle with controller you must have "joy" and "teleop_twist_joy". If you do not have them run the following.
