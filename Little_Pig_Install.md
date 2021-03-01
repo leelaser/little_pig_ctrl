@@ -17,6 +17,7 @@
 * [little_pig_navigation](https://github.com/22arw/little_pig_navigation)
 * [little_pig_rviz](https://github.com/22arw/little_pig_rviz)
 * [gazebo_ros_control](https://github.com/22arw/gazebo_ros_control) -not listed in little pig repos on github
+* [rvis_satellite](https://github.com/robleo/rviz_satellite) -not in our little pig repos
 
 
 ##### Additional packages
@@ -36,7 +37,7 @@ These are installed in the final section and are required for running the robot 
 * ros-melodic-static-tf
 * ros-melodic-mavros
 * ros-melodic-hector-gazebo-plugins
-* ros-melodic-teleop-twist_joy
+* ros-melodic-teleop-twist-joy
 * ros-melodic-robot-localization
 * ros-melodic-joint-state-publisher
 * ros-melodic-robot-state-publisher
@@ -156,12 +157,7 @@ sudo apt-get install ros-melodic-joint-state-publisher
 sudo apt-get install ros-melodic-robot-state-publisher
 ```
 ### Run the robot sim
-In one terminal run 
-```
-source <workspace>/source/devel/setup.bash
-roscore
-```
-Leave that running and in a separate terminal run
+In a terminal run 
 ```
 source <workspace>/source/devel/setup.bash
 roslaunch little_pig_ctrl full.launch | tee ~/little_pig_sim_outfile
