@@ -33,7 +33,8 @@
 
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
-        <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> 
+        <!-- Commented this out after writing the tf broadcasters and listeners -->
+        <!-- <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
 
         <group if="$(arg sim)" ns="$(arg sim_ns)">
 
