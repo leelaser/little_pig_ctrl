@@ -118,5 +118,5 @@
     <remap from="cmd_vel_out" to="cmd_vel_out" /> <!-- To prevent future problems -->
 
     <node pkg="little_pig_ctrl" type="pig_driver_node" name="PigDriver"/>
-
+    <node pkg="rosservice" type="rosservice" name="start_motor" args="call --wait /Piggy/motor_start"/>
 </launch>
