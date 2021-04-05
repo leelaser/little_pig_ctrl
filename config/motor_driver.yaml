@@ -52,7 +52,3 @@ nodes:
       #- "0x2122sub2!" #	Motor 2 Status Flag
       #- "0x2100sub2!" #	Motor 2 Amps
       #- "0x2112!" #		Fault Flag
-<<<<<<< .merge_file_qyNfNP
-      #- "0x6864"
-=======
->>>>>>> .merge_file_1oQpSP
