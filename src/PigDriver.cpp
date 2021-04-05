@@ -1,5 +1,5 @@
 #include <little_pig_ctrl/PigDriver.h>
-#include <canopen_chain_node/ros_chain.h>
+//#include <canopen_chain_node/ros_chain.h>
 #include <controller_manager/controller_manager.h>
 #include <controller_manager_msgs/ControllerState.h>
 
