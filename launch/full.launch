@@ -5,7 +5,7 @@
 
     <!-- Generic parameters -->
 	<arg name="robot" value="basic_laser_pig"/>     <!-- This needs to take a better name -->
-	<arg name="sim" value="true"/>                  <!-- true will run simulation components -->
+	<arg name="sim" value="false"/>                  <!-- true will run simulation components -->
     
     <!-- Gazebo parameters -->
     <arg name="world_name" value="gas_station"/>    <!-- This is the world gazebo will launch -->
