@@ -10,120 +10,113 @@
     <!-- Gazebo parameters -->
     <arg name="world_name" value="gas_station"/>    <!-- This is the world gazebo will launch -->
 
-    <!-- URDF parameters -->
-    <arg name="path2urdf" value="$(find little_pig_description)"/>
-
     <!-- CAN parameters -->
     <arg name="can_device" value="can0"/>
     <arg name="interval_ms" value="500"/>
-    <arg name="path2can_config" value="$(find little_pig_ctrl)"/>
 
-    <!-- Controll parameters -->
-    <arg name="path2control_config" value="$(find little_pig_ctrl)"/>
+    <!-- Namespace parameters for yaml files -->
+    <arg name="ekf_odom" value="EKF_Odom"/>
+    <arg name="ekf_map" value="EKF_Map"/>
+    <arg name="navsat" value="Navsat"/>
+    <arg name="gmapping" value="Gmapping"/>
+    <arg name="lidar" value="LiDAR"/>
+    <arg name="twist" value="Twist"/>
+    <arg name="CANBUS" value="CANopen"/>
 
-    <!-- Namespace parameters -->
-    <arg name="sim_ns" value="simulation"/>
 
-    <group ns="$(arg robot)">
-    
-        <include file="$(find little_pig_description)/launch/upload_robot.launch">
-            <arg name="robot" value="$(arg robot)"/>
-            <arg name="pkg_hardware_config" value="$(arg path2urdf)"/>
+    <rosparam command="load" file="$(find little_pig_navigation)/params/ekf_1_sim.yaml" ns="$(arg ekf_odom)"/>
+    <rosparam command="load" file="$(find little_pig_navigation)/params/ekf_2_sim.yaml" ns="$(arg ekf_map)"/>
+    <rosparam command="load" file="$(find little_pig_navigation)/params/navsat.yaml" ns="$(arg navsat)"/>
+    <rosparam command="load" file="$(find little_pig_navigation)/params/gmapping.yaml" ns="$(arg gmapping)"/>
+    <rosparam command="load" file="$(find little_pig_navigation)/params/LiDAR.yaml" ns="$(arg lidar)"/>
+    <rosparam command="load" file="$(find little_pig_ctrl)/config/teleop.yaml"/>
+    <rosparam command="load" file="$(find little_pig_ctrl)/config/twist_mux.yaml" ns="$(arg twist)"/>
+
+    <group if="$(arg sim)">
+        <rosparam command="load" file="$(find little_pig_ctrl)/config/motor_controller_sim.yaml"/>
+        <rosparam command="load" file="$(find little_pig_gazebo)/config/gazebo_controller_gains.yaml"/>
+    </group>
+
+    <group unless="$(arg sim)">
+        <rosparam command="load" file="$(find little_pig_ctrl)/config/motor_controller.yaml"/>
+        <rosparam command="load" file="$(find little_pig_ctrl)/config/motor_driver.yaml" ns="$(arg CANBUS)"/>
+    </group>
+
+    <!-- Teleop Joystick -->
+    <remap from="cmd_vel" to="Twist/teleop_joy_cmd_vel" />
+    <include file="$(find little_pig_ctrl)/launch/teleop.launch" />
+    <remap from="cmd_vel" to="cmd_vel" /> <!-- To prevent future problems -->
+
+    <!-- Loads robot description to parameter server -->
+    <include file="$(find little_pig_description)/launch/upload_robot.launch">
+        <arg name="robot" value="$(arg robot)"/>
+    </include>
+
+    <!-- Publishes static transforms for fixed joints -->
+    <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <group if="$(arg sim)">
+
+        <!-- Start Gazebo world with given name if desired -->
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <!-- <arg name="world_name" value="$(find little_pig_gazebo)/worlds/$(arg world_name).world"/> -->
         </include>
 
-        <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-
-        <group if="$(arg sim)" ns="$(arg sim_ns)">
-
-            <!-- Start Gazebo world with given name -->
-            <include file="$(find gazebo_ros)/launch/empty_world.launch">
-                <!-- <arg name="world_name" value="$(find little_pig_gazebo)/worlds/$(arg world_name).world"/> -->
-            </include>
-
-            <!-- Loads URDF into gazebo and starts plugins -->
-            <include file="$(find little_pig_gazebo)/launch/simulation.launch">
-                <arg name="robot" value="$(arg robot)"/>
-                <arg name="sim_ns" value="$(arg sim_ns)"/>
-            </include>
-
-            <!-- This remap needs overriden if teb is to be used -->
-            <remap from="cmd_vel" to="ackermann_controller/cmd_vel" />
-            <include file="$(find little_pig_ctrl)/launch/teleop.launch" /> <!-- TELEOP -->
-
-            <!-- Static transform to fix issues with naming convention in rviz -->
-            <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf" args="0 0 0 0 0 0 laser_link front_laser/laser_link" />
-
-            <!-- Spawns rviz with preset configuration -->
-            <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/full_sim.rviz" required="true"/>
-
-            <!-- Launch gmapping instance, only necessary in learning -->
-            <include file="$(find little_pig_navigation)/launch/gmapping_sim.launch" />
-
-            <!-- Launches robot localization instance 1 -->
-            <include file="$(find little_pig_navigation)/launch/ekf_1_sim.launch" />
-            
-            <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf2" args="0 0 0 0 0 0 map odom"/> -->
-            
-            <!-- Launches robot localization instance 2 including navsat corrections -->
-            <include file="$(find little_pig_navigation)/launch/ekf_2_sim.launch" />
-
-            <!-- Launches navsat Transform instance -->
-            <include file="$(find little_pig_navigation)/launch/navsat_sim.launch" />
-
-        </group>
-
-        <group unless="$(arg sim)">
-
-            <!-- This is only a temporary solution to namespace problems -->
-            <group ns="CANopen"> 
-                <include file="$(find little_pig_description)/launch/upload_robot.launch">
-                    <arg name="robot" value="$(arg robot)"/>
-                    <arg name="pkg_hardware_config" value="$(arg path2urdf)"/>
-                </include>
-            </group>
-
-            <include file="$(find little_pig_ctrl)/launch/canopen_402.launch">
-                <arg name="robot" value="$(arg robot)"/>
-                <arg name="pkg_hardware_config" value="$(arg path2can_config)"/>
-                <arg name="component_name" value="CANopen"/>
-                <arg name="can_device" value="$(arg can_device)"/>
-                <arg name="interval_ms" value="$(arg interval_ms)"/>
-                <!-- <arg name="reset_errors_before_recover" value="$(arg reset_errors_before_recover)"/ Deemed Unnecessary -->
-            </include>
-
-            <!-- <remap from="CANopen/controller_manager/propulsion_controller/command/" to="basic_pig/ackermann_controller/cmd_vel/x" /> -->
-
-            <include file="$(find little_pig_ctrl)/launch/generic_controller.launch"> <!-- Calls generic_controller launch -->
-                <arg name="robot" value="$(arg robot)"/>
-                <arg name="component_name" value="CANopen"/>
-            </include>
-
-            <remap from="cmd_vel" to="CANopen/ackermann_controller/cmd_vel" />
-            <include file="$(find little_pig_ctrl)/launch/teleop.launch" />
-
-            <!-- Spawns rviz with preset configuration -->
-            <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/full.rviz" required="true"/>
-
-            <!-- Launches mavros instance -->
-            <include file="$(find little_pig_navigation)/launch/mavros.launch" />
-
-            <!-- Launches gmapping instance, only necessary in learning -->
-            <include file="$(find little_pig_navigation)/launch/gmapping.launch" />
-
-            <!-- Launches robot localization instance 1 -->
-            <include file="$(find little_pig_navigation)/launch/ekf_1.launch" />
-            
-            <!-- Launches robot localization instance 2 including navsat corrections -->
-            <include file="$(find little_pig_navigation)/launch/ekf_2.launch" />
-
-            <!-- Launches navsat Transform instance -->
-            <include file="$(find little_pig_navigation)/launch/navsat.launch" />
-
-            <!-- Launches rpLidar instance -->
-        	<include file="$(find little_pig_navigation)/launch/lidar.launch" />
-
-        </group>
+        <!-- Loads URDF into gazebo and starts plugins -->
+        <include file="$(find little_pig_gazebo)/launch/spawn_robot.launch">
+            <arg name="robot" value="$(arg robot)"/>
+        </include>
 
     </group>
 
+
+    <!-- Launches robot localization instance 1 -->
+    <include file="$(find little_pig_navigation)/launch/ekf_1_sim.launch"> 
+        <arg name="name" value="$(arg ekf_odom)"/>
+    </include>
+
+    <!-- Launches robot localization instance 2 including navsat corrections -->
+    <include file="$(find little_pig_navigation)/launch/ekf_2_sim.launch">
+        <arg name="name" value="$(arg ekf_map)"/>
+    </include>
+
+    <!-- Launches navsat Transform instance -->
+    <include file="$(find little_pig_navigation)/launch/navsat_sim.launch">
+        <arg name="name" value="$(arg navsat)"/>
+    </include>
+
+    <!-- Launch gmapping instance, only necessary in learning -->
+    <!-- <include file="$(find little_pig_navigation)/launch/gmapping.launch">
+        <arg name="name" value="$(arg gmapping)"/>
+    </include> -->
+
+    <group unless="$(arg sim)">
+
+        <remap from="CANopen/ackermann_controller/cmd_vel" to="ackermann_controller/cmd_vel"/>
+        <remap from="CANopen/ackermann_controller/odom" to="ackermann_controller/odom"/>
+
+        <include file="$(find little_pig_ctrl)/launch/canopen_402.launch">
+            <arg name="name" default="$(arg CANBUS)"/>
+            <arg name="can_device" value="$(arg can_device)"/>
+            <!-- <arg name="reset_errors_before_recover" value="$(arg reset_errors_before_recover)"/ Deemed Unnecessary -->
+        </include>
+
+        <!-- Launches mavros instance -->
+        <include file="$(find little_pig_navigation)/launch/mavros.launch" />
+
+        <!-- Launches rpLidar instance -->
+        <include file="$(find little_pig_navigation)/launch/lidar.launch" />
+
+    </group>
+
+    <!-- Spawns rviz with preset configuration --> <!-- Should go to default -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/full_sim.rviz" required="true"/> -->
+
+    <!-- cmd_vel mux -->
+    <remap from="cmd_vel_out" to="ackermann_controller/cmd_vel" />
+    <node pkg="twist_mux" type="twist_mux" name="Twist"/>
+    <remap from="cmd_vel_out" to="cmd_vel_out" /> <!-- To prevent future problems -->
+
+    <node pkg="little_pig_ctrl" type="pig_driver_node" name="PigDriver"/>
+    <node pkg="rosservice" type="rosservice" name="start_motor" args="call --wait /Piggy/motor_start"/>
 </launch>

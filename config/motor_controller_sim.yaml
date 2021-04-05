@@ -1,24 +1,21 @@
-## control_mode_adapter
-# max_command_silence: 0.5
-
-## joint_state_controller
 joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
 
 ackermann_controller:
-  type: ackermann_controller/AckermannController
   spinning_joints:
-    - "ackermann_rear_axle"
+    - "right_front_axle"
+    - "left_front_axle"
+    #- "right_rear_axle"
+    #- "left_rear_axle"
   steering_joints:
-    - "ackermann_steering_joint"
+    - "right_steering_joint"
+    - "left_steering_joint"
   odometry_joints:
-    - "ackermann_rear_axle"
-
-  required_drive_modes:
-    ackermann_rear_axle: 2 #going to -4 or 65536 or 253
-    ackermann_steering_joint: 1
-
+    #- "right_front_axle"
+    #- "left_front_axle"
+    - "right_rear_axle"
+    - "left_rear_axle"
   pose_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]
   twist_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]
 
@@ -33,11 +30,9 @@ ackermann_controller:
   max_deceleration: 2.0
   #min_deceleration: 0.0
 
-  enable_odom_tf: true
+  enable_odom_tf: false
 
-  #wheelbase is technically 1.71 but trimming to get repeatability
-  wheelbase: 1.63
-  #wheelbase: 1.63
+  wheelbase: 1.63 #actually is 1.71
 
   steering_angle_instead_of_angular_speed: true
 
@@ -48,14 +43,3 @@ ackermann_controller:
   odom_frame_id: "odom"
 
   base_frame_id: "base_link"
-
-# steering_controller:
-#   joint: right_steering_joint
-#   required_drive_mode: 1 #profile position
-#   type: position_controllers/JointPositionController
-
-# propulsion_controller:
-#   joint: right_front_axle
-#   #required_drive_mode: -4 #Velocity Position
-#   required_drive_mode: 2 #Velocity
-#   type: velocity_controllers/JointVelocityController
