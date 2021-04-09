@@ -1,5 +1,17 @@
 <launch>
-	<node pkg ="joy" type= "joy_node" name="Joy"/>
-	
-	<node pkg="teleop_twist_joy" type="teleop_node" name="Teleop_Joy"/>
+	<node pkg ="joy" type= "joy_node" name="joystick">
+		<param name="autorepeat_rate" value = "10.0" />	
+	</node>
+
+	<node pkg="teleop_twist_joy" type="teleop_node" name="joystick_to_twist">
+		<param name="scale_angular" value="1.55" />
+		<param name="scale_linear"  value="0.25" />
+		<param name="scale_linear_turbo" value="1.0" />
+		<param name="enable_button" value="5" />
+		<param name="enable_turbo_button" value="4" />
+		<param name="axis_angular" value="3" />
+		<param name="autorepeat_rate" value="0.25" />
+		<param name="publish_frequency" value="10" />
+	</node>
+		
 </launch>
