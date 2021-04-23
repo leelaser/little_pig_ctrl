@@ -69,9 +69,9 @@
                 <arg name="sim_ns" value="$(arg sim_ns)"/>
             </include>
 
-            <!-- This remap needs overriden if teb is to be used -->
+	    <!-- This remap needs overriden if teb is to be used -->
             <remap from="cmd_vel" to="ackermann_controller/cmd_vel" />
-            <include file="$(find little_pig_ctrl)/launch/teleop.launch" /> <!-- TELEOP -->
+	    <include file="$(find little_pig_ctrl)/launch/teleop.launch" /> <!-- TELEOP -->
 
             <!-- Static transform to fix issues with naming convention in rviz -->
             <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf" args="0 0 0 0 0 0 laser_link front_laser/laser_link" />
