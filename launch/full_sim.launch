@@ -33,8 +33,28 @@
 
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
-        <!-- Commented this out after writing the tf broadcasters and listeners -->
-        <!-- <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+        <!-- TF broadcasters and listeners made for: 
+            base_link, 
+            chassis, 
+            camera_link, 
+            imu_link, 
+            laser_link, 
+            laser_link_back, 
+            front_laser, 
+            back_laser
+        -->
+        
+        <!-- This package handles the frames:
+            ackermann_rear_wheel,
+            ackermann_steering_link,
+            left_steer_link,
+            left_front_wheel,
+            left_rear_wheel,
+            right_steer_link,
+            right_front_wheel,
+            right_rear_wheel
+        -->
+        <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
         <group if="$(arg sim)" ns="$(arg sim_ns)">
 
@@ -49,9 +69,9 @@
                 <arg name="sim_ns" value="$(arg sim_ns)"/>
             </include>
 
-            <!-- This remap needs overriden if teb is to be used -->
+	    <!-- This remap needs overriden if teb is to be used -->
             <remap from="cmd_vel" to="ackermann_controller/cmd_vel" />
-            <include file="$(find little_pig_ctrl)/launch/teleop.launch" /> <!-- TELEOP -->
+	    <include file="$(find little_pig_ctrl)/launch/teleop.launch" /> <!-- TELEOP -->
 
             <!-- Static transform to fix issues with naming convention in rviz -->
             <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf" args="0 0 0 0 0 0 laser_link front_laser/laser_link" />
