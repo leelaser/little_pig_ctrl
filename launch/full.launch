@@ -32,7 +32,7 @@
 
     <!-- Teleop Joystick -->
     <remap from="cmd_vel" to="Twist/teleop_joy_cmd_vel" />
-    <include file="$(find little_pig_ctrl)/launch/teleop.launch" />
+    <include file="$(find little_pig_ctrl)/launch/teleop_pig.launch" />
     <remap from="cmd_vel" to="cmd_vel" /> <!-- To prevent future problems -->
 
     <!-- Loads robot description to parameter server -->
