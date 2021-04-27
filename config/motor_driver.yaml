@@ -17,7 +17,7 @@ nodes:
         joint: ackermann_rear_axle
         # (vel (m/s) * 60 s/min * 3.28084 ft/m * 20 gear ratio) / (pi * 23.5 in / 12 in/ft)
         vel_to_device: "(vel * 60 * 3.28084 * 20 /(pi * 23.5 / 12))"
-        vel_from_device: "obj606C * (pi * 23.5 / 12) / (60 * 3.28084 * 20)"
+        vel_from_device: "obj6044 * (pi * 23.5 / 12) / (60 * 3.28084 * 20)"
         #pos_from_device:  "(obj6044 * 2 * pi) / (24 * 22)"
         motor_layer:
           id: 1
@@ -38,7 +38,7 @@ nodes:
           offset: 0x800
           switching_state: 5 #operation enable
           
-    #publish: #Uncomment this section to publish this data to ros topics
+    publish: #Uncomment this section to publish this data to ros topics
       #- "0x6864!" #	Position Actual Value CH 2
       #- "0x606C!" # Velocity Actual Value CH 1
       #- "0x210Fsub2!" #	Temp 1
@@ -51,4 +51,4 @@ nodes:
       #- "0x2104sub2!" #	Motor 2 Encoder Count
       #- "0x2122sub2!" #	Motor 2 Status Flag
       #- "0x2100sub2!" #	Motor 2 Amps
-      #- "0x2112!" #		Fault Flag
+      - "0x2112!" #		Fault Flag

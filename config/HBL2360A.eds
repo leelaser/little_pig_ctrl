@@ -605,6 +605,7 @@ AccessType=rw
 DefaultValue=0x20050920
 PDOMapping=0
 ObjFlags=0x0
+ParameterValue=0x60420010
 
 [1600sub2]
 ParameterName=PDO Mapping Entry - Cmd_VAR 10
@@ -616,6 +617,7 @@ AccessType=rw
 DefaultValue=0x20050A20
 PDOMapping=0
 ObjFlags=0x0
+ParameterValue=0x687A0020
 
 [1601]
 ParameterName=RPDO2 Mapping Parameter
@@ -643,6 +645,7 @@ AccessType=rw
 DefaultValue=0x20050B20
 PDOMapping=0
 ObjFlags=0x0
+ParameterValue=0x60400010
 
 [1601sub2]
 ParameterName=PDO Mapping Entry - Cmd_VAR 12
@@ -654,6 +657,7 @@ AccessType=rw
 DefaultValue=0x20050C20
 PDOMapping=0
 ObjFlags=0x0
+ParameterValue=0x68400010
 
 [1602]
 ParameterName=RPDO3 Mapping Parameter

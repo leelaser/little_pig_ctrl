@@ -12,7 +12,7 @@ ackermann_controller:
     - "ackermann_rear_axle"
 
   required_drive_modes:
-    ackermann_rear_axle: 3 #Rear axle will be in profile velocity mode according to CANopen standard
+    ackermann_rear_axle: 2 #Rear axle will be in velocity mode according to CANopen standard
     ackermann_steering_joint: 1 #Steering axle will be in position mode according to CANopen standard
 
   pose_covariance_diagonal: [1.0,1.0,1.0,1.0,1.0,1.0]
