@@ -3,7 +3,7 @@ Joy:
 
 Teleop_Joy:
   #This is a problem because of backlash
-  scale_angular: 1.55 #These need to be less than urdf limits 1.55 on real thing, 0.523
+  scale_angular: 0.3 #These need to be less than urdf limits 1.55 on real thing, 0.523
   scale_linear: 0.5 #m/s
   scale_linear_turbo: 1.0 #m/s
   enable_button: 5 #7 if xbox one via bluetooth or ps4, 5 if wired
