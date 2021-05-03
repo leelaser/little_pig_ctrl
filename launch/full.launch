@@ -59,6 +59,9 @@
         <arg name="name" value="$(arg navsat)"/>
     </include>
 
+    <!-- Launches USB camera -->
+    <include file="$(find little_pig_ctrl)/launch/usb_cam.launch"/>
+
     <!-- Launch gmapping instance, only necessary in learning -->
     <!-- <include file="$(find little_pig_navigation)/launch/gmapping.launch">
         <arg name="name" value="$(arg gmapping)"/>
