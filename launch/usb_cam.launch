@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node">
+		<!--<param name="image_width" value="800"/>
+		<param name="image_height" value="800"/>-->
+		<param name="pixel_format" value="yuyv"/>
+		<param name="camera_frame_id" value="camera_link"/>
+		<param name="camera_name" value="usb_camera"/>
+	</node>
+</launch>
