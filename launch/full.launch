@@ -42,6 +42,7 @@
 
     <!-- Publishes static transforms for fixed joints -->
     
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     <node name="vehicle_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <!-- Launches robot localization instance 1 -->
