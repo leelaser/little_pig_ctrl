@@ -29,6 +29,7 @@
         <include file="$(find little_pig_description)/launch/upload_robot.launch">
             <arg name="robot" value="$(arg robot)"/>
             <arg name="pkg_hardware_config" value="$(arg path2urdf)"/>
+            <arg name="sim" value="$(arg sim)"/>
         </include>
 
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
@@ -103,6 +104,7 @@
                 <include file="$(find little_pig_description)/launch/upload_robot.launch">
                     <arg name="robot" value="$(arg robot)"/>
                     <arg name="pkg_hardware_config" value="$(arg path2urdf)"/>
+                    <arg name="sim" value="$(arg sim)"/>
                 </include>
             </group>
 

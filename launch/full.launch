@@ -5,6 +5,8 @@
 
     <!-- Generic parameters -->
 	<arg name="robot" value="little_pig_base"/>     <!-- This needs to take a better name -->
+    <arg name="sim" value="false"/>
+    <arg name="rviz" value="false"/>                <!-- Run rviz (requires GUI)-->
 
     <!-- CAN parameters -->
     <arg name="can_device" value="can0"/>
@@ -38,6 +40,7 @@
     <!-- Loads robot description to parameter server -->
     <include file="$(find little_pig_description)/launch/upload_robot.launch">
         <arg name="robot" value="$(arg robot)"/>
+        <arg name="sim" value="$(arg sim)"/>
     </include>
 
     <!-- Publishes static transforms for fixed joints -->
@@ -82,7 +85,7 @@
     <include file="$(find little_pig_navigation)/launch/lidar.launch" />
 
     <!-- Spawns rviz with preset configuration --> <!-- Should go to default -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/full.rviz" required="true"/> 
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find little_pig_rviz)/rviz/full.rviz" if="$(arg rviz)"/> 
 
     <!-- cmd_vel mux -->
     <remap from="cmd_vel_out" to="ackermann_controller/cmd_vel" />
